@@ -1,6 +1,7 @@
 const { analyzeCompanyEmissions } = require("../ExtraFile");
 const { chapGPT } = require("../utils/gpt");
 const { getAllTextForCompany } = require("../utils/readExcel");
+const { getAllRows } = require("../chal");
 
 module.exports.gptResponse = async (req, res, next) => {
   try {
@@ -10,6 +11,7 @@ module.exports.gptResponse = async (req, res, next) => {
     // let rowsOfCompany = getAllTextForCompany(fileName, targetCompanyName);
 
     // console.log(rowsOfCompany);
+    // console.log("description: ", description);
 
     if (!description) {
       return res
@@ -17,8 +19,78 @@ module.exports.gptResponse = async (req, res, next) => {
         .json({ message: `No record found of ${targetCompanyName}` });
     }
 
-    let prompt = `Identify any inconsistencies for ${targetCompanyName} within the data across different sheets. Report conflicting details or misalignments between these sources, if any, in a concise manner. The data is given below: \n\n
-    ${description}
+    // let prompt = `Identify any inconsistencies for ${targetCompanyName} within the data across different sheets. Report conflicting details or misalignments between these sources, if any, in a concise manner. The data is given below: \n\n
+    // ${description}
+    // `;
+    // let prompt = `Identify any inconsistencies for ${targetCompanyName} within the data across different sheets. Report conflicting details or misalignments between these sources, if any, in a concise manner. The data is given below: \n\n${JSON.stringify(
+    //   description,
+    //   null,
+    //   2
+    // )}`;
+
+    // console.log("description: ", description);
+    // console.log("prompt: ", prompt);
+    // res.status(200).json({ message: "good seen" });
+
+    // let response = await chapGPT(prompt);
+    // if (!response) {
+    //   return res.status(400).json({ message: "error" });
+    // } else {
+    //   res.status(200).json({
+    //     success: true,
+    //     response: response,
+    //   });
+    // }
+
+    // res.status(200).json({
+    //   success: true,
+    //   response: "response",
+    // });
+
+    let response = await chapGPT(description);
+    if (!response) {
+      return res.status(400).json({ message: "error" });
+    } else {
+      res.status(200).json({
+        success: true,
+        response: response,
+      });
+    }
+  } catch (error) {
+    console.log("catch error");
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports.gptHardcoded = async (req, res, next) => {
+  try {
+    console.log("hello");
+    const { targetCompanyName } = req.body;
+
+    let fileName = "All.xlsx";
+    let fileName1 = "Data Collection.xlsx";
+    let fileName2 = "Bahrain-and-Malta-data.xlsx";
+
+    let rowsOfCompany1 = getAllRows(fileName, targetCompanyName);
+    console.log("rows: ", rowsOfCompany1);
+    // let rowsOfCompany1 = getAllRows(fileName1, targetCompanyName);
+    // let rowsOfCompany2 = getAllRows(fileName2, targetCompanyName);
+
+    // console.log("rowsOfCompany1: ", rowsOfCompany1);
+    // console.log("rowsOfCompany2: ", rowsOfCompany2);
+
+    // console.log(rowsOfCompany);
+
+    // if (Object.keys(rowsOfCompany1).length === 0) {
+    //   return res.status(400).json({ message: "No record found" });
+    // }
+    // if (Object.keys(rowsOfCompany2).length === 0) {
+    //   return res.status(400).json({ message: "No record found" });
+    // }
+
+    let prompt = `Identify any inconsistencies for ${targetCompanyName} within the data across different sheets. Report conflicting details which may be signs of potential greenwashing or misalignments between these sources, if any, in a concise manner.  Keep the response within 12 lines: \n\n
+    ${rowsOfCompany1} 
+
     `;
     // console.log("prompt: ", prompt);
 

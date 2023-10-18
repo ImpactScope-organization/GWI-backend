@@ -1,38 +1,3 @@
-// const xlsx = require("xlsx");
-
-// const getAllTextForCompany = (fileName, companyName) => {
-//   const workbook = xlsx.readFile(fileName);
-//   const sheetNames = workbook.SheetNames;
-
-//   let allText = [];
-
-//   sheetNames.forEach((sheetName) => {
-//     const sheet = workbook.Sheets[sheetName];
-//     const rows = xlsx.utils.sheet_to_json(sheet);
-//     const filteredRows = rows.filter((row) => row.Company === companyName);
-
-//     if (filteredRows.length > 0) {
-//       let sheetText = [];
-//       filteredRows.forEach((row) => {
-//         if (row.text) {
-//           sheetText.push(row.text);
-//         }
-//       });
-//       if (sheetText.length > 0) {
-//         allText.push(`${sheetName}:\n${sheetText.join(" ")}`);
-//       }
-//     }
-//   });
-
-//   return allText.join("\n\n");
-// };
-
-// const targetCompanyName = "JP Morgan";
-// const fileName = "Data Collection.xlsx"; // Set the correct file path here
-
-// const result = getAllTextForCompany(fileName, targetCompanyName);
-// console.log(result);
-
 ////Limitation//////////
 const xlsx = require("xlsx");
 
@@ -45,6 +10,7 @@ const getAllTextForCompany = (fileName, companyName) => {
   sheetNames.forEach((sheetName) => {
     const sheet = workbook.Sheets[sheetName];
     const rows = xlsx.utils.sheet_to_json(sheet);
+    // console.log("rows: ", rows);
     let filteredRows = rows.filter((row) => row.Company === companyName);
 
     // Limit to 20 rows

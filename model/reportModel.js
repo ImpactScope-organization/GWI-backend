@@ -4,39 +4,101 @@ const reportSchema = new mongoose.Schema({
     type: String,
   },
 
+  jurisdiction:{
+    type:String
+  },
+
+  dataSources:{
+    type:String
+  },
+
   contradiction: {
     type: String,
   },
 
-  potentialGreenswashing: {
+  IPFSHash: {
     type: String,
   },
 
-  freshness: {
+  
+  etherscanURL: {
     type: String,
+  },
+
+  age: {
+    type: String,
+    default: "Fresh",
+  },
+
+  priority: {
+    type: String,
+    default: "Low",
   },
 
   sentToRegulators: {
-    type: Boolean,
-    default: false,
+     type: String,
+    default: "false",
   },
 
   pending: {
-    type: Boolean,
-    default: true,
+      type: String,
+    default: "false",
+  },
+
+  reviewing: {
+      type: String,
+    default: "false",
   },
 
   reviewed: {
-    type: Boolean,
-    default: false,
+       type: String,
+    default: "false",
   },
 
   disregard: {
-    type: Boolean,
-    default: false,
+     type: String,
+    default: "false",
+  },
+
+  claims: {
+    type: String,
   },
 
   summary: {
+    type: String,
+  },
+
+  openedBy: {
+    type: String,
+  },
+
+  assignedTo: {
+    type: String,
+  },
+
+  sendToRegulatorsTimeStamp: {
+    type: String,
+  },
+  caseOpenedTimeStamp: {
+    type: String,
+  },
+  
+  caseAssignedTimeStamp: {
+    type: String,
+  },
+  caseUpdateTimeStamp: {
+    type: String,
+  },
+
+  comment: {
+    type: String,
+  },
+
+  conclusion: {
+    type: String,
+  },
+
+  updatedComment: {
     type: String,
   },
 });
