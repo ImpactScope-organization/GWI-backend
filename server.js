@@ -7,6 +7,7 @@ require("dotenv").config();
 
 
 const allowedOrigins = [
+  'https://gwi-frontend.vercel.app',
   'https://gwi.impactscope.com',
   'https://gwi-thirdparty-git-main-kostiantyn-zanins-projects.vercel.app',
   'https://gwi-thirdparty-3psk33spg-kostiantyn-zanins-projects.vercel.app',
