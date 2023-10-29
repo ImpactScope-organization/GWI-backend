@@ -17,7 +17,7 @@ const regulatorLogin = async (req, res) => {
       return res.status(400).json({ message: "Invalid Password" });
     }
 
-    return res.status(200).json({ result: oldUser });
+    return res.status(200).json({ result: oldUser.email });
   } catch (error) {
    return  res.status(500).json({ message: "Something went wrong" });
   }
