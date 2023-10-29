@@ -4,11 +4,13 @@ const regulatorLogin = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const oldUser = await RegulatorModal.findOne({ email });
+    const oldUser = await RegulatorModal.findOne({ email, password });
 
     if (!oldUser) {
       return res.status(404).json({ message: "User doesn't exist" });
     }
+
+
 
     
     const isPasswordCorrect = password == oldUser.password;
