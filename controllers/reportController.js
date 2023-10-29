@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const ReportModel = require("../model/reportModel");
 
 const createReport = async (req, res) => {
@@ -237,6 +238,21 @@ const updateCase = async (req, res) => {
   }
 };
 
+
+const deleteReportCollection = async (req, res) => {
+  try {
+    const db = mongoose.connection.db;
+
+    // Delete the specified collection
+    await db.dropCollection("reports");
+
+    return res.status(200).json({ success: true, message: "Database cleaned up" });
+  } catch (error) {
+    console.error(error);
+   return  res.status(500).json({ message: "Something went wrong" });
+  }
+};
+
 module.exports = {
   createReport,
   sendReportToRegulator,
@@ -250,4 +266,5 @@ module.exports = {
   assignCase,
   closeCase,
   updateCase,
+  deleteReportCollection
 };

@@ -11,6 +11,7 @@ const {
   updateCase,
   modifyReportAgePriority,
   createReport,
+  deleteReportCollection,
 } = require("../controllers/reportController");
 
 const router = require("express").Router();
@@ -27,5 +28,6 @@ router.put("/changeStatusToReview", changeStatusToReview);
 router.put("/assignCase", assignCase);
 router.put("/closeCase", closeCase);
 router.put("/updateCase", updateCase);
+router.delete("/deleteReports", deleteReportCollection)
 
 module.exports = router;
