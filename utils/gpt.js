@@ -7,15 +7,7 @@ let configuration = new Configuration({
 
 const openai = new OpenAIApi(configuration);
 
-// const chapGPT = async (prompt) => {
-//   const response = await openai.createChatCompletion({
-//     // model: "gpt-3.5-turbo",
-//     model: "gpt-4",
-//     messages: [{ role: "user", content: prompt }],
-//   });
-//   console.log(response["data"]["choices"][0]["message"]["content"]);
-//   return response["data"]["choices"][0]["message"]["content"];
-// };
+
 
 const chapGPT = async (prompt) => {
   try {
