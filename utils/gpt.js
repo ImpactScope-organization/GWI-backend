@@ -7,13 +7,11 @@ let configuration = new Configuration({
 
 const openai = new OpenAIApi(configuration);
 
-
-
-const chapGPT = async (prompt) => {
+const chapGPT = async (prompt, systemPrompts = [], gptVersion = "gpt-4") => {
   try {
     let response = await openai.createChatCompletion({
-      model: "gpt-4",
-      messages: [{ role: "user", content: prompt }],
+      model: gptVersion,
+      messages: [{ role: "user", content: prompt }, ...systemPrompts],
     });
     return response.data.choices[0].message.content;
   } catch (err) {

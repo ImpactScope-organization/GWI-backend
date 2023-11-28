@@ -5,13 +5,7 @@ const { getAllRows } = require("../chal");
 
 module.exports.gptResponse = async (req, res, next) => {
   try {
-    const { targetCompanyName, description } = req.body;
-    // let fileName = "Data Collection.xlsx";
-
-    // let rowsOfCompany = getAllTextForCompany(fileName, targetCompanyName);
-
-    // console.log(rowsOfCompany);
-    // console.log("description: ", description);
+    const { targetCompanyName, description, systemPrompts } = req.body;
 
     if (!description) {
       return res
@@ -19,35 +13,12 @@ module.exports.gptResponse = async (req, res, next) => {
         .json({ message: `No record found of ${targetCompanyName}` });
     }
 
-    // let prompt = `Identify any inconsistencies for ${targetCompanyName} within the data across different sheets. Report conflicting details or misalignments between these sources, if any, in a concise manner. The data is given below: \n\n
-    // ${description}
-    // `;
-    // let prompt = `Identify any inconsistencies for ${targetCompanyName} within the data across different sheets. Report conflicting details or misalignments between these sources, if any, in a concise manner. The data is given below: \n\n${JSON.stringify(
-    //   description,
-    //   null,
-    //   2
-    // )}`;
-
-    // console.log("description: ", description);
-    // console.log("prompt: ", prompt);
-    // res.status(200).json({ message: "good seen" });
-
-    // let response = await chapGPT(prompt);
-    // if (!response) {
-    //   return res.status(400).json({ message: "error" });
-    // } else {
-    //   res.status(200).json({
-    //     success: true,
-    //     response: response,
-    //   });
-    // }
-
-    // res.status(200).json({
-    //   success: true,
-    //   response: "response",
-    // });
-
-    let response = await chapGPT(description);
+    let response = await chapGPT(description, [systemPrompts]);
+    console.log(
+      "==============Request Received At GPT Prompt======================"
+    );
+    console.log(response);
+    console.log("====================================");
     if (!response) {
       return res.status(400).json({ message: "error" });
     } else {
