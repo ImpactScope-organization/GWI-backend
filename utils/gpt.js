@@ -12,6 +12,8 @@ const chapGPT = async (prompt, systemPrompts = [], gptVersion = "gpt-4") => {
     let response = await openai.createChatCompletion({
       model: gptVersion,
       messages: [{ role: "user", content: prompt }, ...systemPrompts],
+      temperature: 0.2,
+      n: 1,
     });
     return response.data.choices[0].message.content;
   } catch (err) {

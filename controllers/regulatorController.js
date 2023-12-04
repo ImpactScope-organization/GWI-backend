@@ -10,9 +10,6 @@ const regulatorLogin = async (req, res) => {
       return res.status(404).json({ message: "User doesn't exist" });
     }
 
-
-
-    
     const isPasswordCorrect = password == oldUser.password;
 
     if (!isPasswordCorrect) {
@@ -21,7 +18,7 @@ const regulatorLogin = async (req, res) => {
 
     return res.status(200).json({ result: oldUser.email });
   } catch (error) {
-   return  res.status(500).json({ message: "Something went wrong" });
+    return res.status(500).json({ message: error });
   }
 };
 

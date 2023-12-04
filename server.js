@@ -3,17 +3,17 @@ const app = express();
 const bodyParser = require("body-parser");
 const cors = require("cors");
 require("dotenv").config();
-
-
+const mongoose = require("mongoose");
 
 const allowedOrigins = [
-  'https://gwi-frontend.vercel.app',
-  'https://gwi-thirdparty.vercel.app',
-  'https://gwi.impactscope.com',
-  'https://gwi-admin.impactscope.com',
-  'https://gwi-thirdparty-git-main-kostiantyn-zanins-projects.vercel.app',
-  'https://gwi-thirdparty-3psk33spg-kostiantyn-zanins-projects.vercel.app',
-  'http://localhost:3000', // For development purposes
+  "https://gwi-frontend.vercel.app",
+  "https://gwi-thirdparty.vercel.app",
+  "https://gwi.impactscope.com",
+  "https://gwi-admin.impactscope.com",
+  "https://gwi-thirdparty-git-main-kostiantyn-zanins-projects.vercel.app",
+  "https://gwi-thirdparty-3psk33spg-kostiantyn-zanins-projects.vercel.app",
+  "http://localhost:3000", // For development purposes
+  "http://localhost:3001", // For development purposes
 ];
 
 // Configure CORS with specific origins allowed.
@@ -23,16 +23,14 @@ app.use(
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
-        callback(new Error('Not allowed by CORS'));
+        callback(new Error("Not allowed by CORS"));
       }
     },
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
     optionsSuccessStatus: 204,
   })
 );
-
-
 
 // app.use(cors());
 app.use(express.json());

@@ -4,15 +4,48 @@ const reportSchema = new mongoose.Schema({
     type: String,
   },
 
-  jurisdiction:{
-    type:String
+  jurisdiction: {
+    type: String,
   },
 
-  dataSources:{
-    type:String
+  sector: {
+    type: String,
+  },
+
+  annualRevenue: {
+    type: String,
+  },
+
+  noOfEmployees: {
+    type: String,
+  },
+
+  dataSources: {
+    type: String,
   },
 
   contradiction: {
+    type: String,
+  },
+
+  unsubstantiatedClaims: {
+    type: String,
+  },
+
+  potentialInconsistencies: {
+    type: String,
+  },
+  sources: { type: String },
+
+  greenwashRiskPercentage: {
+    type: String,
+  },
+
+  reportingRiskPercentage: {
+    type: String,
+  },
+
+  GHGEmissions: {
     type: String,
   },
 
@@ -20,7 +53,6 @@ const reportSchema = new mongoose.Schema({
     type: String,
   },
 
-  
   etherscanURL: {
     type: String,
   },
@@ -36,27 +68,27 @@ const reportSchema = new mongoose.Schema({
   },
 
   sentToRegulators: {
-     type: String,
+    type: String,
     default: "false",
   },
 
   pending: {
-      type: String,
+    type: String,
     default: "false",
   },
 
   reviewing: {
-      type: String,
+    type: String,
     default: "false",
   },
 
   reviewed: {
-       type: String,
+    type: String,
     default: "false",
   },
 
   disregard: {
-     type: String,
+    type: String,
     default: "false",
   },
 
@@ -82,7 +114,7 @@ const reportSchema = new mongoose.Schema({
   caseOpenedTimeStamp: {
     type: String,
   },
-  
+
   caseAssignedTimeStamp: {
     type: String,
   },
