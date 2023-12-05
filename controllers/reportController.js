@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const ReportModel = require("../model/reportModel");
 
 const createReport = async (req, res) => {
@@ -109,7 +109,7 @@ const getAllReviewedReports = async (req, res) => {
 
 const getDetailsOfSingleReport = async (req, res) => {
   try {
-    const  id  = req.params.id; 
+    const id = req.params.id;
     if (!id) {
       res.json({ message: "Company name is required to get details" });
     }
@@ -238,7 +238,6 @@ const updateCase = async (req, res) => {
   }
 };
 
-
 const deleteReportCollection = async (req, res) => {
   try {
     const db = mongoose.connection.db;
@@ -246,10 +245,12 @@ const deleteReportCollection = async (req, res) => {
     // Delete the specified collection
     await db.dropCollection("reports");
 
-    return res.status(200).json({ success: true, message: "Database cleaned up" });
+    return res
+      .status(200)
+      .json({ success: true, message: "Database cleaned up" });
   } catch (error) {
     console.error(error);
-   return  res.status(500).json({ message: "Something went wrong" });
+    return res.status(500).json({ message: "Something went wrong" });
   }
 };
 
@@ -266,5 +267,5 @@ module.exports = {
   assignCase,
   closeCase,
   updateCase,
-  deleteReportCollection
+  deleteReportCollection,
 };
