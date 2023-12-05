@@ -1,11 +1,60 @@
-runtime: nodejs^20.0.0
+name: Deploy node js server to GCP App Engine
 
-env_variables:
-  CYCLIC_DB: rich-teal-octopus-kitCyclicDB
-  OPEN_AI_API_KEY: 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
-  MONGO_URL: mongodb://yoagency:Ucp7BkirMclKdGGW@ac-qb5ayya-shard-00-00.5e5oogu.mongodb.net:27017,ac-qb5ayya-shard-00-01.5e5oogu.mongodb.net:27017,ac-qb5ayya-shard-00-02.5e5oogu.mongodb.net:27017/?ssl=true&replicaSet=atlas-ogv1oy-shard-0&authSource=admin&retryWrites=true&w=majority
-  CYCLIC_APP_ID: rich-teal-octopus-kit
-  JWT_SECRET: dadafafqooei019831-4911m,d
-  JWT_EXPIRESIN: 2h
-  CYCLIC_URL: https://rich-teal-octopus-kit.cyclic.app
-  CYCLIC_BUCKET_NAME: cyclic-rich-teal-octopus-kit-eu-west-3
+on:
+  push:
+    branches: [main]
+
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Detect package manager
+        id: detect-package-manager
+        run: |
+          if [ -f "${{ github.workspace }}/yarn.lock" ]; then
+            echo "::set-output name=manager::yarn"
+            echo "::set-output name=command::install"
+            echo "::set-output name=runner::yarn"
+            exit 0
+          elif [ -f "${{ github.workspace }}/package.json" ]; then
+            echo "::set-output name=manager::npm"
+            echo "::set-output name=command::ci"
+            echo "::set-output name=runner::npx --no-install"
+            exit 0
+          else
+            echo "Unable to determine packager manager"
+            exit 1
+          fi
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+          cache: ${{ steps.detect-package-manager.outputs.manager }}
+
+      - name: Install dependencies
+        run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+      - name: Complile env
+        run: |
+          echo '${{ secrets.NODE_ENV }}' > ./.env
+
+      - id: "auth"
+        name: "Authenticate with GCP"
+        uses: "google-github-actions/auth@v0"
+        with:
+          credentials_json: "${{ secrets.GCP_SA_KEY }}"
+
+      - id: "deploy"
+        name: "Deploy to App Engine"
+        uses: "google-github-actions/deploy-appengine@v1"
+        with:
+          deliverables: app.yaml,dispatch.yaml
+          project_id: ${{ secrets.GCP_PROJECT }}
+
+      - name: "Check Deployment"
+        run: 'curl "${{ steps.deploy.outputs.url }}"'
