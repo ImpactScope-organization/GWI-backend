@@ -5,6 +5,7 @@ const cors = require("cors");
 require("dotenv").config();
 const mongoose = require("mongoose");
 
+const PORT = process.env.PORT || 5000;
 const allowedOrigins = [
   "https://gwi-frontend.vercel.app",
   "https://gwi-thirdparty.vercel.app",
@@ -49,8 +50,8 @@ app.use("/api/prompt", promptRoute);
 
 connectDb();
 
-app.listen(5000, () => {
-  console.log("server listening on port ", 5000);
+app.listen(PORT, () => {
+  console.log("server listening on port ", PORT);
 });
 
 // Bank of America
