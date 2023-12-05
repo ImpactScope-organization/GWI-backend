@@ -15,10 +15,12 @@ const allowedOrigins = [
   "https://gwi-thirdparty-3psk33spg-kostiantyn-zanins-projects.vercel.app",
   // gcp deployed frontend URLs
   "https://gwi-env.lm.r.appspot.com",
+  "https://20231205t133517-dot-gwi-env.lm.r.appspot.com", //gwi-fe
 
   // Local URLs
   "http://localhost:3000", // For development purposes
   "http://localhost:3001", // For development purposes
+  "*",
 ];
 
 // Configure CORS with specific origins allowed.
