@@ -16,11 +16,9 @@ const allowedOrigins = [
   // gcp deployed frontend URLs
   "https://frontend-dot-gwi-env.lm.r.appspot.com/", //gwi-fe
   "https://thirdparty-dot-gwi-env.lm.r.appspot.com", //gwi-fe-tp
-
   // Local URLs
   "http://localhost:3000", // For development purposes
   "http://localhost:3001", // For development purposes
-  "*",
 ];
 
 // Configure CORS with specific origins allowed.
