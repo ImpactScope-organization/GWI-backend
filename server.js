@@ -13,6 +13,10 @@ const allowedOrigins = [
   "https://gwi-admin.impactscope.com",
   "https://gwi-thirdparty-git-main-kostiantyn-zanins-projects.vercel.app",
   "https://gwi-thirdparty-3psk33spg-kostiantyn-zanins-projects.vercel.app",
+  // gcp deployed frontend URLs
+  "https://gwi-env.lm.r.appspot.com",
+
+  // Local URLs
   "http://localhost:3000", // For development purposes
   "http://localhost:3001", // For development purposes
 ];
