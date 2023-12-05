@@ -14,7 +14,7 @@ const allowedOrigins = [
   "https://gwi-thirdparty-git-main-kostiantyn-zanins-projects.vercel.app",
   "https://gwi-thirdparty-3psk33spg-kostiantyn-zanins-projects.vercel.app",
   // gcp deployed frontend URLs
-  "https://frontend-dot-gwi-env.lm.r.appspot.com/", //gwi-fe
+  "https://frontend-dot-gwi-env.lm.r.appspot.com", //gwi-fe
   "https://thirdparty-dot-gwi-env.lm.r.appspot.com", //gwi-fe-tp
   // Local URLs
   "http://localhost:3000", // For development purposes
