@@ -50,7 +50,9 @@ app.use("/api/prompt", promptRoute);
 connectDb();
 
 app.listen(5000, () => {
+  console.log("====================================");
   console.log("server listening on port ", 5000);
+  console.log("====================================");
 });
 
 // Bank of America
