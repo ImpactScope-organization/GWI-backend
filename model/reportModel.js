@@ -1,137 +1,170 @@
 const mongoose = require("mongoose");
-const reportSchema = new mongoose.Schema({
-  companyName: {
-    type: String,
-  },
+const reportSchema = new mongoose.Schema(
+  {
+    companyName: {
+      type: String,
+    },
 
-  jurisdiction: {
-    type: String,
-  },
+    jurisdiction: {
+      type: String,
+    },
 
-  sector: {
-    type: String,
-  },
+    sector: {
+      type: String,
+    },
 
-  annualRevenue: {
-    type: String,
-  },
+    annualRevenue: {
+      type: String,
+    },
 
-  noOfEmployees: {
-    type: String,
-  },
+    noOfEmployees: {
+      type: String,
+    },
 
-  dataSources: {
-    type: String,
-  },
+    fileName: {
+      type: String,
+    },
 
-  contradiction: {
-    type: String,
-  },
+    isDemo: {
+      type: Boolean,
+      default: false,
+    },
 
-  unsubstantiatedClaims: {
-    type: String,
-  },
+    status: {
+      type: String,
+      default: "initialized",
+    },
 
-  potentialInconsistencies: {
-    type: String,
-  },
-  sources: { type: String },
+    dataSources: {
+      type: String,
+    },
 
-  greenwashRiskPercentage: {
-    type: String,
-  },
+    contradiction: {
+      type: String,
+    },
 
-  reportingRiskPercentage: {
-    type: String,
-  },
+    unsubstantiatedClaims: {
+      type: String,
+    },
 
-  GHGEmissions: {
-    type: String,
-  },
+    potentialInconsistencies: {
+      type: String,
+    },
 
-  IPFSHash: {
-    type: String,
-  },
+    sources: { type: String },
 
-  etherscanURL: {
-    type: String,
-  },
+    greenwashRiskPercentage: {
+      type: String,
+    },
 
-  age: {
-    type: String,
-    default: "Fresh",
-  },
+    reportingRiskPercentage: {
+      type: String,
+    },
 
-  priority: {
-    type: String,
-    default: "Low",
-  },
+    GHGEmissions: {
+      type: String,
+    },
 
-  sentToRegulators: {
-    type: String,
-    default: "false",
-  },
+    IPFSHash: {
+      type: String,
+    },
 
-  pending: {
-    type: String,
-    default: "false",
-  },
+    etherscanURL: {
+      type: String,
+    },
 
-  reviewing: {
-    type: String,
-    default: "false",
-  },
+    age: {
+      type: String,
+      default: "Fresh",
+    },
 
-  reviewed: {
-    type: String,
-    default: "false",
-  },
+    priority: {
+      type: String,
+      default: "Low",
+    },
 
-  disregard: {
-    type: String,
-    default: "false",
-  },
+    sentToRegulators: {
+      type: String,
+      default: "false",
+    },
 
-  claims: {
-    type: String,
-  },
+    pending: {
+      type: String,
+      default: "false",
+    },
 
-  summary: {
-    type: String,
-  },
+    reviewing: {
+      type: String,
+      default: "false",
+    },
 
-  openedBy: {
-    type: String,
-  },
+    reviewed: {
+      type: String,
+      default: "false",
+    },
 
-  assignedTo: {
-    type: String,
-  },
+    disregard: {
+      type: String,
+      default: "false",
+    },
 
-  sendToRegulatorsTimeStamp: {
-    type: String,
-  },
-  caseOpenedTimeStamp: {
-    type: String,
-  },
+    claims: {
+      type: String,
+    },
 
-  caseAssignedTimeStamp: {
-    type: String,
-  },
-  caseUpdateTimeStamp: {
-    type: String,
-  },
+    summary: {
+      type: String,
+    },
 
-  comment: {
-    type: String,
-  },
+    openedBy: {
+      type: String,
+    },
 
-  conclusion: {
-    type: String,
-  },
+    assignedTo: {
+      type: String,
+    },
 
-  updatedComment: {
-    type: String,
+    sendToRegulatorsTimeStamp: {
+      type: String,
+    },
+    caseOpenedTimeStamp: {
+      type: String,
+    },
+
+    caseAssignedTimeStamp: {
+      type: String,
+    },
+    caseUpdateTimeStamp: {
+      type: String,
+    },
+
+    comment: {
+      type: String,
+    },
+
+    conclusion: {
+      type: String,
+    },
+
+    updatedComment: {
+      type: String,
+    },
+  },
+  { timestamps: true }
+);
+// Define a virtual property 'id' that maps to '_id'
+reportSchema.virtual("id").get(function () {
+  return this._id.toHexString();
+});
+
+// Ensure virtual fields are serialized when converting to JSON
+reportSchema.set("toJSON", {
+  virtuals: true,
+  transform: function (doc, ret) {
+    // Remove the _id and __v properties, and use the 'id' property instead
+    ret.id = ret._id;
+    delete ret._id;
+    delete ret.__v;
   },
 });
 

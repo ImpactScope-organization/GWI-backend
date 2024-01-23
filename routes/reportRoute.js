@@ -12,6 +12,8 @@ const {
   modifyReportAgePriority,
   createReport,
   deleteReportCollection,
+  getAllReportsSentToRegulators,
+  disregardCase,
 } = require("../controllers/reportController");
 const { fileSave } = require("../middleware/report");
 
@@ -25,8 +27,10 @@ router.get("/getPendingReports", getAllPendingReports);
 router.get("/getSingleReportDetail/:id", getDetailsOfSingleReport);
 router.get("/getAllUnderReviewReports", getAllUnderReviewReports);
 router.get("/getAllReviewedReports", getAllReviewedReports);
+router.get("/getAllReportsSentToRegulators", getAllReportsSentToRegulators);
 router.put("/changeStatusToReview", changeStatusToReview);
 router.put("/assignCase", assignCase);
+router.put("/disregardCase", disregardCase);
 router.put("/closeCase", closeCase);
 router.put("/updateCase", updateCase);
 router.delete("/deleteReports", deleteReportCollection);

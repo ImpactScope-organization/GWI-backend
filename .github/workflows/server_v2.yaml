@@ -1,0 +1,21 @@
+# name: server_v2
+# on:
+#   push:
+#     branches: [BE-V2]
+# jobs:
+#   builds:
+#     runs-on: self-hosted
+#     strategy:
+#       matrix:
+#         node-version: [18.x]
+#     steps:
+#       - uses: actions/checkout@v3
+#       - name: Use Node.js ${{ matrix.node-version }}
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: ${{ matrix.node-version }}
+#           cache: "npm"
+#       - run: npm install
+#       - run: pm2 stop "server_v2" || true
+#       - run: pm2 delete "server_v2" || true
+#       - run: pm2 start ecosystem.config.js

@@ -3,9 +3,7 @@ const fileSave = async (req, res, next) => {
     console.time("uploading start");
     const file = req.file; // Array of files
     const uploadPromises = [];
-    for (const file of files) {
-      uploadPromises.push(uploadFile(file));
-    }
+    uploadPromises.push(uploadFile(file));
 
     const uploadResults = await Promise.all(uploadPromises);
 
@@ -25,7 +23,7 @@ const fileSave = async (req, res, next) => {
 
     const savedResourcesData = await Promise.all(savedResources);
 
-    res.json(savedResourcesData);
+    next(json(savedResourcesData));
   } catch (error) {
     next(error);
   }

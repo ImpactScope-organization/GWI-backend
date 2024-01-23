@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const connectDatabase = () => {
   try {
+    mongoose.set("strictQuery", true);
     mongoose.connect(process.env.MONGO_URL);
     console.log(`Database connected successfully : ${process.env.MONGO_URL}`);
   } catch (error) {

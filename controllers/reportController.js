@@ -35,9 +35,16 @@ const sendReportToRegulator = async (req, res) => {
 
 const getReportsSentToRegulators = async (req, res) => {
   try {
-    const reports = await ReportModel.find({ sentToRegulators: "true" });
+    const reports = await ReportModel.find({
+      sentToRegulators: "true",
+      pending: "true",
+    });
+    if (reports.length === 0) {
+      res.json({ message: "No pending reports found" });
+    } else {
+      res.status(200).json({ results: reports });
+    }
     // console.log(reports);
-    res.status(200).json({ results: reports });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Something went wrong" });
@@ -79,9 +86,28 @@ const getAllPendingReports = async (req, res) => {
   }
 };
 
+const getAllReportsSentToRegulators = async (req, res) => {
+  try {
+    const reports = await ReportModel.find({
+      sentToRegulators: "true",
+    });
+    if (reports.length === 0) {
+      res.status(200).json({ message: "No report found.", results: reports });
+    } else {
+      res.status(200).json({ results: reports });
+    }
+  } catch (error) {
+    // console.error(error);
+    res.status(500).json({ message: "Something went wrong" });
+  }
+};
+
 const getAllUnderReviewReports = async (req, res) => {
   try {
-    const reports = await ReportModel.find({ reviewing: "true" });
+    const reports = await ReportModel.find({
+      sentToRegulators: "true",
+      reviewing: "true",
+    });
     if (reports.length === 0) {
       res.json({ message: "No under review reports found" });
     } else {
@@ -95,7 +121,12 @@ const getAllUnderReviewReports = async (req, res) => {
 
 const getAllReviewedReports = async (req, res) => {
   try {
-    const reports = await ReportModel.find({ reviewed: "true" });
+    const reports = await ReportModel.find({
+      $or: [
+        { reviewed: "true", sentToRegulators: "true" },
+        { disregard: "true", sentToRegulators: "true" },
+      ],
+    });
     if (reports.length === 0) {
       res.json({ message: "No reviewed reports found" });
     } else {
@@ -111,7 +142,7 @@ const getDetailsOfSingleReport = async (req, res) => {
   try {
     const id = req.params.id;
     if (!id) {
-      res.json({ message: "Company name is required to get details" });
+      res.json({ message: "Company ID is required to get details" });
     }
     const reports = await ReportModel.findOne({ _id: id });
     if (!reports) {
@@ -131,7 +162,7 @@ const changeStatusToReview = async (req, res) => {
     const { company } = req.body;
 
     if (!company) {
-      return res.json({ message: "Company name is required to get details" });
+      return res.json({ message: "Company ID is required to get details" });
     }
 
     const reports = await ReportModel.find({ companyName: company });
@@ -159,7 +190,7 @@ const assignCase = async (req, res) => {
     const { company } = req.body;
 
     if (!company) {
-      return res.json({ message: "Company name is required to get details" });
+      return res.json({ message: "Company Name is required to get details" });
     }
 
     const reports = await ReportModel.find({ companyName: company });
@@ -181,13 +212,39 @@ const assignCase = async (req, res) => {
     res.status(500).json({ message: "Something went wrong" });
   }
 };
+const disregardCase = async (req, res) => {
+  try {
+    const { id } = req.body;
 
+    if (!id) {
+      return res.json({ message: "Company ID is required to get details" });
+    }
+
+    const reports = await ReportModel.find({ _id: id });
+
+    if (reports.length === 0) {
+      return res.json({ message: "No report found" });
+    }
+
+    // Assuming req.body contains the updated data
+    const updatedReport = await ReportModel.findOneAndUpdate(
+      { _id: id },
+      { disregard: req.body?.disregard },
+      { new: true } // To return the updated document
+    );
+
+    res.status(200).json({ results: updatedReport });
+  } catch (error) {
+    // console.error(error);
+    res.status(500).json({ message: "Something went wrong" });
+  }
+};
 const closeCase = async (req, res) => {
   try {
     const { company } = req.body;
 
     if (!company) {
-      return res.json({ message: "Company name is required to get details" });
+      return res.json({ message: "Company ID is required to get details" });
     }
 
     const reports = await ReportModel.find({ companyName: company });
@@ -215,7 +272,7 @@ const updateCase = async (req, res) => {
     const { company } = req.body;
 
     if (!company) {
-      return res.json({ message: "Company name is required to get details" });
+      return res.json({ message: "Company ID is required to get details" });
     }
 
     const reports = await ReportModel.find({ companyName: company });
@@ -263,8 +320,10 @@ module.exports = {
   getDetailsOfSingleReport,
   getAllUnderReviewReports,
   getAllReviewedReports,
+  getAllReportsSentToRegulators,
   changeStatusToReview,
   assignCase,
+  disregardCase,
   closeCase,
   updateCase,
   deleteReportCollection,
