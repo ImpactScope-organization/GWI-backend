@@ -15,8 +15,6 @@ const createReport = async (req, res) => {
 const sendReportToRegulator = async (req, res) => {
   const { companyName } = req.body;
 
-  // console.log("hello: ", req.body);
-
   try {
     const report = await ReportModel.findOne({ companyName });
 
@@ -44,7 +42,6 @@ const getReportsSentToRegulators = async (req, res) => {
     } else {
       res.status(200).json({ results: reports });
     }
-    // console.log(reports);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Something went wrong" });
@@ -148,7 +145,6 @@ const getDetailsOfSingleReport = async (req, res) => {
     if (!reports) {
       res.json({ message: "No report found" });
     } else {
-      // console.log("hello");
       res.status(200).json({ results: reports });
     }
   } catch (error) {

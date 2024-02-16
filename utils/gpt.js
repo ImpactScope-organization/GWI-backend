@@ -30,7 +30,6 @@ const chapGPT = async (
     }
   } catch (err) {
     console.error(err);
-    console.log("gpt error");
     throw err;
   }
 };

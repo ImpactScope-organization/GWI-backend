@@ -11,7 +11,6 @@ const getAllRows = (fileName, companyName) => {
     const rows = xlsx.utils.sheet_to_json(sheet);
 
     let filteredRows = rows.filter((row) => row.Company === companyName);
-    console.log("filteredRows", filteredRows);
 
     // Limit to 20 rows (or whatever limit you want)
     filteredRows = filteredRows.slice(0, 20);
@@ -34,9 +33,6 @@ const getAllRows = (fileName, companyName) => {
 
 const targetCompanyName = "JP Morgan";
 const fileName = "Data Collection.xlsx"; // Set the correct file path here
-
-// let ans = getAllTextForCompany(fileName, targetCompanyName);
-// console.log("ans: ", ans);
 
 module.exports = {
   getAllRows,

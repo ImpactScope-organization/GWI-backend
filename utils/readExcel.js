@@ -10,7 +10,6 @@ const getAllTextForCompany = (fileName, companyName) => {
   sheetNames.forEach((sheetName) => {
     const sheet = workbook.Sheets[sheetName];
     const rows = xlsx.utils.sheet_to_json(sheet);
-    // console.log("rows: ", rows);
     let filteredRows = rows.filter((row) => row.Company === companyName);
 
     // Limit to 20 rows

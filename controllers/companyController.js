@@ -4,11 +4,6 @@ const reportModel = require("../model/reportModel");
 const getCompany = async (req, res) => {
   try {
     const id = req.params.id;
-    console.log({
-      id: id,
-      req: req.params.id,
-    });
-
     const company = await reportModel.findOne({ _id: id });
 
     if (!company) {
@@ -65,13 +60,6 @@ const createCompany = async (req, res) => {
 const updateCompany = async (req, res) => {
   try {
     const id = req.params.id;
-
-    console.log(
-      "================Update Company Request Recieved===================="
-    );
-    console.log(id);
-    console.log("====================================");
-
     // Find the company by ID and update it
     const updatedCompany = await reportModel.findByIdAndUpdate(
       id,
